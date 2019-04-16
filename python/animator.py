@@ -18,3 +18,4 @@ for image in images:
     video.write(cv2.imread(os.path.join(imgFolder, image)))
 
 video.release()
+print(sys.argv[2])
