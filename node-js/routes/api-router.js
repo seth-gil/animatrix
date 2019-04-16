@@ -1,6 +1,10 @@
-import express from 'express';
-const apiRouter = express.Router();
+const express = require('express');
+const router = express.Router();
 
-apiRouter.get('/api/v1/video/:id', (req, res) => {
-    res.send(req.params())
+router.get('/video/:id', (req, res) => {
+    res.json({
+        param: req.params.id
+    });
 });
+
+module.exports = router;
