@@ -8,21 +8,15 @@ export default class ImageInput extends React.Component {
         this.input = React.createRef();
     }
 
-    handleChange = (event) => {
-
-    }
-
     render() {
-        $(this.input.current).click();
-
         return (
             <input 
                 ref={this.input}
                 type="file" 
-                name="images" 
+                name="request" 
                 multiple 
                 accept="image/*" 
-                onChange={this.handleChange.bind(this)} />
+                onChange={this.props.change} />
         );
     }
 }

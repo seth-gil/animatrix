@@ -7,19 +7,16 @@ var util = require('util')
 
 router.use(fileUpload());
 
-function createVideo(req, res) {
+function createVideo(req, res, error) {
     const options = {
         args: [req.params.id, `${req.params.id}.avi`]
     };
     
-    return PythonShell.run('../python/animator.py', options, function (err, results) {
+    PythonShell.run('../python/animator.py', options, function (err, results) {
         if (err) throw err;
         console.log('results: %j', results);
 
-        // res.json({
-        //     results: results
-        // });
-
+        //res.send(`${results}, ${error}`);
         return results;
     });
 }
@@ -41,15 +38,17 @@ router.post("/video/:id", async (req, res, next) => {
         if(req.files.images) images = req.files.images;
     
         // Use the mv() method to place the file somewhere on your server
-        images.mv(`./${dir}`, function(ex) {
-            resp.push("File uploaded!");
+        let index = 0;
+        images.forEach(function(image) {
+            image.mv(`./${dir}/${index++}.jpg`, function(ex) {
+                resp.push("File uploaded!");
+    
+                if(ex) error.push(ex);
+            });    
+        })  
 
-            if(ex) error.push(ex);
-        });      
-
-        //resp.push(await util.inspect(createVideo(req, res)));
-
-        res.send(error);
+        createVideo(req, res, error);
+        res.send("Process complete.");
         next();
     } catch(err) {
         next(err);
