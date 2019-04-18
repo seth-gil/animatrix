@@ -6,13 +6,13 @@ A website that takes a set of images and renders them into a stop-motion animati
 
 Python version used: 3.6.7
 
-flask
+- flask
 
-flask-cors
+- flask-cors
 
-cv2
+- cv2
 
-ffmpeg
+- ffmpeg
 
 
 
