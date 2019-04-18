@@ -1,4 +1,3 @@
-upload
 POST /upload    
     data: { files[], id } (project id)  
     -> store files in [id] directory
