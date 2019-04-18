@@ -7,10 +7,10 @@ import Col from "react-bootstrap/Col";
 export default class Upload extends React.Component {
   state = {
     files: null,
-    project: null
+    id: "default"
   };
 
-  handleChange = (event) => {
+  handleFileSelect = (event) => {
     console.log("e.t.f", event.target.files);
     this.setState({files: event.target.files});
   }
@@ -27,21 +27,26 @@ export default class Upload extends React.Component {
     for(var index = 0; index < fileList.length; index++) {
       formData.append("files[]", fileList.item(index), index + ".jpg");	
     }
-    formData.append("project", "placeholder");
+    formData.append("id", this.state.id);
   
     fetch("http://192.168.1.113:5000/api/v1/upload", {
       method: 'POST',
       body: formData	
-    }).then(function(res) {
-      res.text().then((text) => {
-        _this.setState({video: text});
-      })
+    }).then(function() {
+      // Nothing returned
+      console.log("Success");
     }).catch(function(err) {
-      console.log('Error', err);
+      console.log("Error", err);
     });
   }
 
+  handleProjectSelect(event) {
+    let sel = event.target;
+    this.setState({id: sel.options[sel.selectedIndex].value});
+  }
+
   render() {
+    console.log(this.state.id);
     return (
       <section>
         <h2>Upload Images</h2>
@@ -51,15 +56,15 @@ export default class Upload extends React.Component {
             <Col sm>
               <Form.Group>
                 <Form.Label>Choose images</Form.Label>
-                <ImageInput change={this.handleChange.bind(this)} />
+                <ImageInput change={this.handleFileSelect.bind(this)} />
               </Form.Group>
             </Col>
             <Col sm>
               <Form.Group>
                 <Form.Label>Choose project</Form.Label>
-                <Form.Control as="select">
-                  <option value="123">My First Project</option>
-                  <option value="124">Lego Movie</option>
+                <Form.Control as="select" onChange={this.handleProjectSelect.bind(this)}>
+                  <option value="12300">My First Project</option>
+                  <option value="23439">Lego Movie</option>
                 </Form.Control>
               </Form.Group>
             </Col>

@@ -4,7 +4,7 @@ POST /upload
     -> update database (?)        
 
 POST /project  
-    data: { user, name } (project name)         
+    data: { name } (project name)         
     -> create new project in database
     -> return project JSON
 
