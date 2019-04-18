@@ -40,7 +40,6 @@ export default class Projects extends React.Component {
                             )
                         })
                     }
-                    
                 </CardColumns>
             </main>
         )

@@ -16,7 +16,11 @@ export default class App extends React.Component {
           <Route path="/" exact component={Home} />
           <Route path="/upload/" component={Upload} />
           <Route path="/projects/" component={Projects} />
-          <Route path="/project/:name/" component={Project} />
+          <Route path="/project/:id/" component={Project} />
+
+          <video autoPlay controls width="400" height="300">
+            <source src={require("./default.mp4")} type="video/mp4" />
+          </video>
         </Container>
       </div>
     );
