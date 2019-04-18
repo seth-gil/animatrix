@@ -15,7 +15,7 @@ def AnimateFolder(imgFolder,video):
 	height, width, layers = frame.shape
 
 	vidPathA = os.path.join(imgFolder,video+".avi")
-	vidPathM = os.path.join(imgFolder,video+".mp4")
+	vidPathM = os.path.join(imgFolder,"preview"+video+".mp4")
 
 	video = cv2.VideoWriter(vidPathA, 0, 1, (width,height))
 
@@ -52,4 +52,4 @@ def Animate():
 	return ("success")
 
 if __name__ == "__main__":
-	app.run(debug=True,host="192.168.1.113") 
+	app.run(debug=True,host="192.168.1.113")  # delet when deploying
