@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
 import cv2
+import pymongo
 
 app = Flask(__name__)
 CORS(app);
@@ -15,7 +16,7 @@ def AnimateFolder(imgFolder,video):
 	height, width, layers = frame.shape
 
 	vidPathA = os.path.join(imgFolder,video+".avi")
-	vidPathM = os.path.join(imgFolder,"preview"+video+".mp4")
+	vidPathM = os.path.join(imgFolder,"preview"+".mp4")
 
 	video = cv2.VideoWriter(vidPathA, 0, 1, (width,height))
 
@@ -50,6 +51,13 @@ def Animate():
 
 	AnimateFolder(task_id,task_id)
 	return ("success")
+
+@app.route("/api/v1/project/<string:project_id>",methods=["GET"])
+def project(project_id):
+	name = "NamePlaceholder"
+	desc = "DescPlaceholder"
+	thumb = "default/1.jpg"
+	return jsonify({"name":name,"description":desc,"thumbnail":thumb,"id":"default"})
 
 @app.route("/api/v1/test",methods=["GET"])
 def test():
