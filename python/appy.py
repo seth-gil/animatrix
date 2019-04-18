@@ -6,7 +6,7 @@ import os
 import cv2
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}});
+CORS(app);
 
 # Animates all files in a folder 
 def AnimateFolder(imgFolder,video):
@@ -25,8 +25,11 @@ def AnimateFolder(imgFolder,video):
 	return vidPath
 
 
-@app.route("/api/v1/video/<string:task_id>",methods=["POST"])
-def Animate(task_id):
+@app.route("/api/v1/upload",methods=["POST"])
+def Animate():
+	print(request.form["project"])
+
+	task_id = request.form["project"]
 	try:
 		request.files
 		None
@@ -36,12 +39,13 @@ def Animate(task_id):
 		os.makedirs(task_id)
 
 	i = 0
-	for file in request.files.getlist("request"):
+	for file in request.files.getlist("files[]"):
 		file.save(os.path.join(task_id,str(i)+".jpg"))
 		i = i+1
 	print("\n\n\n"+str(request.files.getlist("request"))+"\n\n\n")
 
-	return(AnimateFolder(task_id,task_id))
+	os.system("ffmpeg -framerate 1 -i " + task_id + "/%d.jpg "+task_id +".mp4")
+	return ("success")
 
 if __name__ == "__main__":
 	app.run(debug=True,host="192.168.1.113") 
