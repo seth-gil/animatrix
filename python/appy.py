@@ -6,7 +6,7 @@ import os
 import cv2
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}});
+CORS(app);
 
 # Animates all files in a folder 
 def AnimateFolder(imgFolder,video):

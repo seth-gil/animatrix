@@ -21,44 +21,14 @@ function createVideo(req, res, error) {
     });
 }
 
-router.post("/video/:id", async (req, res, next) => {
-    try {
-        const dir = req.params.id;
-        let error = [], resp = [], images;
-
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        } 
-
-        if (Object.keys(req.files).length == 0) {
-            error.push("No files were uploaded.");
-        }
-    
-        // The name of the input field (i.e. "images") is used to retrieve the uploaded file
-        if(req.files.images) images = req.files.images;
-    
-        // Use the mv() method to place the file somewhere on your server
-        let index = 0;
-        images.forEach(function(image) {
-            image.mv(`./${dir}/${index++}.jpg`, function(ex) {
-                resp.push("File uploaded!");
-    
-                if(ex) error.push(ex);
-            });    
-        })  
-
-        createVideo(req, res, error);
-        res.send("Process complete.");
-        next();
-    } catch(err) {
-        next(err);
-    }
+router.post("/video/:id", (req, res, next) => {
+    res.send(req.params);
+    next();
 });
 
-router.get("/video/:id", (req, res) => {
-    res.json({
-        param: req.params.id
-    });
+router.get("/video/:id", (req, res, next) => {
+    res.send(req.params);
+    next();
 });
 
 
