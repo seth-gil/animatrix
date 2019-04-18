@@ -1,51 +1,24 @@
 import React from 'react';
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import ImageInput from './components/ImageInput';
+import {Route} from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import NavBar from "./components/Navigator";
+import Home from "./pages/Home";
+import Upload from "./pages/Upload";
+import Projects from "./pages/Projects";
+import Project from "./pages/Project";
 
-class App extends React.Component {
-  state = {
-    files: null
-  };
-
-  handleChange = (event) => {
-    console.log("e.t.f", event.target.files);
-    this.setState({files: event.target.files});
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(this.state.files);
-    
-    var formData = new FormData();
-    var fileList = this.state.files;
-    for(var index = 0; index < fileList.length; index++) {
-      formData.append('file' + index, fileList.item(index));	
-    }
-  
-    fetch("http://192.168.1.113:5000/api/v1/video/tester", {
-      method:'POST',
-      body:formData	
-    }).then(function(res) {
-      console.log('Status', res);
-    }).catch(function(err) {
-      console.log('Error', err);
-    });
-  }
-
+export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Form onSubmit={this.handleSubmit.bind(this)} encType="multipart/form-data">
-          <ImageInput change={this.handleChange.bind(this)} />
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+        <NavBar />
+        <Container style={{marginTop: "15px"}}>
+          <Route path="/" exact component={Home} />
+          <Route path="/upload/" component={Upload} />
+          <Route path="/projects/" component={Projects} />
+          <Route path="/project/:name/" component={Project} />
+        </Container>
       </div>
     );
   }
 }
-
-export default App;
