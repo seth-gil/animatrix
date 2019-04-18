@@ -63,6 +63,7 @@ export default class Upload extends React.Component {
               <Form.Group>
                 <Form.Label>Choose project</Form.Label>
                 <Form.Control as="select" onChange={this.handleProjectSelect.bind(this)}>
+                  <option value="default">-- Please select --</option>
                   <option value="12300">My First Project</option>
                   <option value="23439">Lego Movie</option>
                 </Form.Control>
