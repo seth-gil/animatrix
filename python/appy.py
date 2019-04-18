@@ -24,7 +24,7 @@ def AnimateFolder(imgFolder,video):
 
 	video.release()
 
-	os.system("ffmpeg -i %s -c:v libx264 -crf 19 -preset slow -c:a libfdk_aac -b:a 192k -ac 2 %s"  % (vidPathA, vidPathM))
+	os.system("ffmpeg -framerate 1 -i " + imgFolder + "\%01d.jpg -codec copy " + vidPathM)
 	#os.remove(vidPathA)
 	return vidPathM
 
