@@ -24,16 +24,16 @@ def AnimateFolder(imgFolder,video):
 
 	video.release()
 
-	#os.system("ffmpeg -framerate 1 -i " + imgFolder + "\%01d.jpg -codec copy " + vidPathM)
-	#os.remove(vidPathA)
+	os.system("ffmpeg -i " + vidPathA + " " + vidPathM)
+	os.remove(vidPathA)
 	return vidPathM
 
 
 @app.route("/api/v1/upload",methods=["POST"])
 def Animate():
-	print(request.form["project"])
+	print(request.form["id"])
 
-	task_id = request.form["project"]
+	task_id = request.form["id"]
 	try:
 		request.files
 		None
@@ -47,8 +47,6 @@ def Animate():
 		file.save(os.path.join(task_id,str(i)+".jpg"))
 		i = i+1
 	print("\n\n\n"+str(request.files.getlist("request"))+"\n\n\n")
-
-
 
 	AnimateFolder(task_id,task_id)
 	return ("success")
