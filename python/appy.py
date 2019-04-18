@@ -14,15 +14,19 @@ def AnimateFolder(imgFolder,video):
 	frame = cv2.imread(os.path.join(imgFolder, images[0]))
 	height, width, layers = frame.shape
 
-	vidPath = os.path.join(imgFolder,video+".avi")
+	vidPathA = os.path.join(imgFolder,video+".avi")
+	vidPathM = os.path.join(imgFolder,video+".mp4")
 
-	video = cv2.VideoWriter(vidPath, 0, 1, (width,height))
+	video = cv2.VideoWriter(vidPathA, 0, 1, (width,height))
 
 	for image in images:
 		video.write(cv2.imread(os.path.join(imgFolder, image)))
 
 	video.release()
-	return vidPath
+
+	os.system("ffmpeg -i %s -c:v libx264 -crf 19 -preset slow -c:a libfdk_aac -b:a 192k -ac 2 %s"  % (vidPathA, vidPathM))
+	#os.remove(vidPathA)
+	return vidPathM
 
 
 @app.route("/api/v1/upload",methods=["POST"])
@@ -44,7 +48,9 @@ def Animate():
 		i = i+1
 	print("\n\n\n"+str(request.files.getlist("request"))+"\n\n\n")
 
-	os.system("ffmpeg -framerate 1 -i " + task_id + "/%d.jpg "+task_id +".mp4")
+
+
+	AnimateFolder(task_id,task_id)
 	return ("success")
 
 if __name__ == "__main__":
