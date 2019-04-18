@@ -28,10 +28,13 @@ export default class Project extends React.Component {
                 {
                     this.state.loaded ? (
                         <section>
-                            <h1>{}</h1>
+                            <h1>{this.state.data.name}</h1>
                             <p>
-                                {}
+                                {this.state.data.description}
                             </p>
+                            <video autoplay loop class="embed-responsive-item">
+                                <source src={require(`../../python/${this.state.data.id}/preview.mp4`)} type="video/mp4" />
+                            </video>
                             <hr/>
                         </section>
                     ) : (
