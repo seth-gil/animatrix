@@ -56,4 +56,4 @@ def test():
 	return "success"
 
 if __name__ == "__main__":
-	app.run(debug=True,host="192.168.1.113")  # delet when deploying
+	app.run(debug=True)  # delet when deploying
