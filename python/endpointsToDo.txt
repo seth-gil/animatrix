@@ -11,3 +11,10 @@ POST /project
 GET /project/:id
     -> get project from database
     -> return project JSON
+
+
+
+Project needs:
+id
+name
+first frame location
