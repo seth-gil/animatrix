@@ -51,5 +51,9 @@ def Animate():
 	AnimateFolder(task_id,task_id)
 	return ("success")
 
+@app.route("/api/v1/test",methods=["POST"])
+def test():
+	return "success"
+
 if __name__ == "__main__":
 	app.run(debug=True,host="192.168.1.113")  # delet when deploying
